@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="width=device-width, initial-scale=1.0;" charset=utf-8>
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="js/anychart-base.min.js"></script>
+    <ul class="topnav">
+        <li><a class="active" href="#">test1</a></li>
+        <li><a href="index2.html">test2</a></li>
+        <li><a href="index3.html">test3</a></li>
+    </ul>
+</head>
+
+<!--<body onload="time()">-->
+
+<body>
+    <h1 id="showtime" align="center">
+    </h1>
+    <div id="container"></div>
+    <audio controls src="music/music.m4a" loop="loop" autoplay="autoplay"> </audio>
+    <style type="text/css">
+        html,
+        #container {
+            width: 100%;
+            height: 90%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script>
+        anychart.onDocumentReady(function () {
+            // 添加数据
+            var data = [
+                [Date.UTC(2023, 5, 21), 1, 1],
+                [Date.UTC(2023, 5, 24), 10, 10],
+                [Date.UTC(2023, 5, 25), 70, 20],
+                [Date.UTC(2023, 5, 30), 70, 50]
+            ];
+
+            // 创建数据集
+            var dataSet = anychart.data.set(data);
+
+            // 创建一个阶梯折线图
+            var chart = anychart.line();
+
+            // 为所有系列映射数据
+            var firstSeriesData = dataSet.mapAs({ x: 0, value: 1 });
+            var secondSeriesData = dataSet.mapAs({ x: 0, value: 2 });
+
+            // 创建系列并命名
+            var firstSeries = chart.line(firstSeriesData);
+            firstSeries.name("**");
+            var secondSeries = chart.line(secondSeriesData);
+            secondSeries.name("**");
+
+            // 创建图例并自定义参数
+            chart.legend().enabled(true).fontSize(14).padding([10, 0, 10, 0]);
+
+            // 添加标题并自定义参数
+            chart.title("****");
+
+            // 命名轴
+            chart.yAxis().title("****(%)");
+            chart.xAxis().title("Date");
+
+            //创建时间规格
+            var dateTimeScale = anychart.scales.dateTime();
+            dateTimeScale.minimum(Date.UTC(2023, 5, 21));
+            dateTimeScale.maximum(Date.UTC(2023, 9, 31));
+
+            var dateTimeTicks = dateTimeScale.ticks();
+            dateTimeTicks.interval("date", 1);
+            chart.xScale(dateTimeScale);
+
+            // 自定义标记
+            firstSeries.hovered().markers().type("circle").size(4);
+            secondSeries.hovered().markers().type("circle").size(4);
+
+            // 开启十字轴，并且去掉十字轴的Y轴
+            chart.crosshair().enabled(true).yStroke(null).yLabel(false);
+
+            // 改变工具提示的位置
+            chart.tooltip().positionMode("point");
+            chart.tooltip().position("right").anchor("left-center").offsetX(5).offsetY(5);
+
+            // 在普通状态下改变系列折线样式
+            firstSeries.normal().stroke("#ff0000", 2.5);
+            secondSeries.normal().stroke("#0000ff", 2.5);
+
+            // 设置在哪里放置折线图
+            chart.container("container");
+
+            // 绘制折线图
+            chart.draw();
+            console.log("drawing")
+        });
+
+        /*show time*/
+        function time() {
+            t_div = document.getElementById('showtime');
+            var now = new Date();
+            var startDate = new Date(2023, 5, 21, 20);
+            var leftTime = now.getTime() - startDate.getTime();
+            var leftsecond = parseInt(leftTime / 1000);
+            var day = Math.floor(leftsecond / (60 * 60 * 24));
+            var hour = Math.floor((leftsecond - day * 24 * 60 * 60) / 3600);
+            var minute = Math.floor((leftsecond - day * 24 * 60 * 60 - hour * 3600) / 60);
+            var second = Math.floor(leftsecond - day * 24 * 60 * 60 - hour * 3600 - minute * 60);
+            t_div.innerHTML = "时间 " + day + "天 " + hour + "时 " + minute + "分 " + second + "秒";
+
+            setTimeout(time, 1000);
+        }
+        /*play music*/
+        document.onclick = function (event) {
+            document.querySelector("audio").play()
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="width=device-width, initial-scale=1.0;" charset=utf-8>
+    <script type="text/javascript" src="https://cc-1257798285.cos.ap-guangzhou.myqcloud.com/js/md5.js"></script>
+    <title>login</title>
+</head>
+
+<body onload="time()">
+    <div style="text-align: center; vertical-align: middel;" onKeyPress="return keyevent(event)">
+        <h1 id="showtime" align="center"></h1>
+        <br><br>
+        <input type="password" id="password" style="font-size:1.5rem;padding:6px;text-align:center;" placeholder="密码"
+            required width="100px"></input>
+        <br>
+        <br>
+        <button type="submit" style="font-size:1.5rem;padding:6px;" onclick="submit()">登录</button>
+    </div>
+</body>
+
+<script>
+    var url = 'http://192.168.1.43';
+    function keyevent(e) {
+        console.log(e)
+        if ((e && e.keyCode == 13) || e == 0) {
+            submit()
+        }
+    }
+
+    function submit() {
+        if (document.getElementById('password').value.length == 0) {
+            return;
+        }
+
+        var password = MD5(document.getElementById('password').value);
+        document.getElementById('password').value = "";
+        console.log(password)
+        var data = {
+            pwd: password
+        };
+
+        fetch(url + '/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(function (response) {
+                if (response.ok) {
+                    window.location.href = url + '?v=' + (new Date().getTime());
+                    return
+                } else {
+                    return;
+                }
+            })
+            .catch(function (error) {
+                console.error('Fetch error:', error);
+            });
+    }
+
+    /* time */
+    function time() {
+        t_div = document.getElementById('showtime');
+        var now = new Date();
+        var format = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+        data_str = now.toLocaleString('zh-CN', format);
+        t_div.innerHTML = data_str
+        setTimeout(time, 1000);
+    }
+
+</script>
+
+</html>
