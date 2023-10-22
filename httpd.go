@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"flag"
+	"fmt"
 	"io"
 	"log"
 	"math/rand"
@@ -17,7 +18,7 @@ const logFile = "log/access.log"
 const passwdFile = "conf/passwd"
 const loginHtml = "html/login.html"
 const rootPath = "html"
-const defaultPage = rootPath + "/index1.html"
+const defaultPage = rootPath + "/main.html"
 
 type Auth struct {
 	Pwd string `json:"pwd"`
@@ -72,6 +73,7 @@ func getRoot(w http.ResponseWriter, r *http.Request) {
 	} else { // cookie
 		if checkCookie(ck.Value) == true { //cookie is ok
 			if len(r.URL.Path) > 0 {
+				//fmt.Println("access:",r.URL.Path)
                 if(r.URL.Path == "/") {
 					http.ServeFile(w, r, defaultPage)
 					return
