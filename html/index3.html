@@ -5,53 +5,26 @@
     <meta content="width=device-width, initial-scale=1.0;" charset=utf-8>
     <link type="text/css" rel="stylesheet" href="css/style.css">
     <title>profile</title>
-    <ul class="topnav">
-        <li><a href="./index1.html">test1</a></li>
-        <li><a href="./index2.html">test2</a></li>
-        <li><a class="active" href="#">test3</a></li>
-    </ul>
 </head>
 
-<body onload="time()">
-    <h1 id="showtime" align="center">
-        </h2>
-        <script>
-            /* 时间 */
-            function time() {
-                t_div = document.getElementById('showtime');
-                var now = new Date();
-                var startDate = new Date(2023, 5, 21, 20);
-                var leftTime = now.getTime() - startDate.getTime();
-                var leftsecond = parseInt(leftTime / 1000);
-                var day = Math.floor(leftsecond / (60 * 60 * 24));
-                var hour = Math.floor((leftsecond - day * 24 * 60 * 60) / 3600);
-                var minute = Math.floor((leftsecond - day * 24 * 60 * 60 - hour * 3600) / 60);
-                var second = Math.floor(leftsecond - day * 24 * 60 * 60 - hour * 3600 - minute * 60);
-                t_div.innerHTML = "时间 " + day + "天 " + hour + "时 " + minute + "分 " + second + "秒";
-                setTimeout(time, 1000);
-            }
-        </script>
-        <div class="cardlist">
-            <div class="cardbox">
-                <h2>11</h2>
-                <p>111</p>
-            </div>
-            <div class="cardbox">
-                <h2>22</h2>
-            </div>
+<body>
+    <style>
+        body{
+            color: #ffffff;
+        }
+    </style>
+    <div class="cardlist">
+        <div class="cardbox">
+            <h2>11</h2>
+            <p>111</p>
         </div>
-        <h2>33</h2>
-        <h2>语录</h2>
-
-        <!--  -->
-        <script>
-            document.onclick = function (event) {
-                document.querySelector("audio").play()
-            }
-        </script>
-        <audio controls src="https://cc-1257798285.cos.ap-guangzhou.myqcloud.com/music/music.m4a" loop="loop"
-            autoplay="autoplay">
-        </audio>
+        <div class="cardbox">
+            <h2>22</h2>
+        </div>
+    </div>
+    <h2>33</h2>
+    <h2>语录</h2>
+    <p>123</p>
 </body>
 
 </html>

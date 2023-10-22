@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="width=device-width, initial-scale=1.0;" charset=utf-8>
+    <link type="text/css" rel="stylesheet" href="css/main.css">
+    <script type="text/javascript" src="music/meandyou.lrc"></script>
+    <script type="text/javascript" src="music/zhuoqing.lrc"></script>
+    <ul class="topnav">
+        <li><a href="#" onclick="showframe1()">test1</a></li>
+        <li><a href="#" onclick="showframe(2)">test2</a></li>
+        <li><a href="#" onclick="showframe(3)">test3</a></li>
+    </ul>
+</head>
+
+<body>
+    <style>
+        video#bg {
+            margin: 0px;
+            padding: 0px;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: url("https://cc-1257798285.cos.ap-guangzhou.myqcloud.com/image/bg") no-repeat;
+            /* background-size: cover; */
+            object-fit: fill;
+        }
+
+        #frame {
+            background-color: transparent;
+            width: 100%;
+            height: 78vh;
+        }
+    </style>
+    <video id="bg" autoplay muted loop poster="https://cc-1257798285.cos.ap-guangzhou.myqcloud.com/image/bg">
+        <source src="https://cc-1257798285.cos.ap-guangzhou.myqcloud.com/video/bg" ,type="video/mp4">
+    </video>
+    <h1 align="center">2023年6月21日20时</h1>
+    <h1 id="showtime" align="center"></h1>
+    <iframe id="frame" seamless scrolling="auto" frameborder="0" src="index3.html"></iframe>
+    <script>
+        /*show time*/
+        function time() {
+            t_div = document.getElementById('showtime');
+            var now = new Date();
+            var startDate = new Date(2023, 5, 21, 20);
+            var leftTime = now.getTime() - startDate.getTime();
+            var leftsecond = parseInt(leftTime / 1000);
+            var day = Math.floor(leftsecond / (60 * 60 * 24));
+            var hour = Math.floor((leftsecond - day * 24 * 60 * 60) / 3600);
+            var minute = Math.floor((leftsecond - day * 24 * 60 * 60 - hour * 3600) / 60);
+            var second = Math.floor(leftsecond - day * 24 * 60 * 60 - hour * 3600 - minute * 60);
+            t_div.innerHTML = "时间 " + day + "天 " + hour + "时 " + minute + "分 " + second + "秒";
+
+            setTimeout(time, 1000);
+        }
+
+        /*show iframe*/
+        function showframe1() {
+            var iframe = document.getElementById("frame");
+            iframe.src = "index1.html"
+        }
+
+        function showframe(i) {
+            var iframe = document.getElementById("frame");
+            if (i == 2) {
+                iframe.src = "index2.html"
+            } else {
+                iframe.src = "index3.html"
+            }
+        }
+
+        /*play music*/
+        document.getElementById('frame').contentWindow.addEventListener('click', () => {
+            document.querySelector("audio").play();
+            document.getElementById("bg").play();
+        })
+        document.getElementById('frame').contentWindow.addEventListener('scroll', () => {
+            document.querySelector("audio").play();
+            document.getElementById("bg").play();
+        })
+        document.onclick = function (event) {
+            document.querySelector("audio").play();
+            document.getElementById("bg").play();
+        }
+        document.onscroll = function (event) {
+            document.querySelector("audio").play();
+            document.getElementById("bg").play();
+        }
+    </script>
+    <script src="https://l2dwidget.js.org/lib/L2Dwidget.min.js"></script>
+    <script>
+        L2Dwidget.init({
+            model: {
+                jsonPath: 'https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json',
+                scale: 1
+            },
+            mobile: {
+                "show": true,
+                "scale": 0.5
+            },
+            react: {
+                opacity: 1
+            },
+            "dialog": {
+                "enable": true,
+                "script": {
+                    'every idle 5s': '测试！'
+                }
+            }
+        });
+    </script>
+</body>
+<footer>
+    <div style="float: left; position: fixed; left: 0%; top: 90%;">
+        <div id="audioBox" style="opacity: 0.1;">
+            <script type="text/javascript">
+                var songs = ["music/zhuoqing.mp3", "music/meandyou.mp3"];
+                var lrcs = [zhuoqing, meandyou];
+                var index = 0;
+                var lrc;
+                window.onload = function () {
+                    time();
+                    if (songs.length == 0) {
+                        return;
+                    }
+                    lrc = parseLyric();
+                    var myAudio = new Audio();
+                    myAudio.preload = true;
+                    myAudio.controls = true;
+                    myAudio.loop = false;
+                    index = 0;
+                    myAudio.src = songs[index];
+                    myAudio.addEventListener('ended', playEndedHandler, false);
+                    myAudio.addEventListener('timeupdate', playtimeupdateHandler, false);
+                    myAudio.play();
+                    document.getElementById("audioBox").appendChild(myAudio);
+
+                    function playtimeupdateHandler() {
+                        if (myAudio.currentTime > lrc[0][0]) {
+                            document.getElementById('lrc').innerHTML = lrc[0][1];
+                            lrc.shift();
+                        }
+                    }
+
+                    function playEndedHandler() {
+                        index += 1;
+                        if (index == songs.length) {
+                            index = 0;
+                        }
+                        myAudio.src = songs[index];
+                        lrc.length = 0;
+                        lrc = parseLyric();
+                        myAudio.play();
+                        //myAudio.removeEventListener('ended', playEndedHandler, false);
+                    }
+
+                    /* 解析歌词 */
+                    function parseLyric() {
+                        lyric = lrcs[index].split('\n');
+                        var _l = lyric.length;
+                        lyc = new Array();
+                        for (i = 0; i < _l; i++) {
+                            var d = lyric[i].match(/\[\d{2}:\d{2}((\.|\:)\d{2})\]/g);
+                            var t = lyric[i].split(d);
+                            if (d != null) {
+                                var dt = String(d).split(':');
+                                var _t = Math.round(parseInt(dt[0].split('[')[1]) * 6000 + parseFloat(dt[1].split(']')[0]) * 100) / 100;
+                                lyc.push([_t, t[1]]);
+                            }
+                        }
+                        return lyc;
+                    }
+                }
+            </script>
+        </div>
+    </div>
+    <style>
+        #lrc {
+            align-content: center;
+            text-align: center;
+            justify-content: center;
+            color: whitesmoke;
+            font-size: 2.5em;
+        }
+    </style>
+    <div id="lrc"></div>
+</footer>
+
+</html>

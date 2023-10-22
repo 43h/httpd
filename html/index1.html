@@ -3,36 +3,27 @@
 
 <head>
     <meta content="width=device-width, initial-scale=1.0;" charset=utf-8>
-    <link type="text/css" rel="stylesheet" href="css/style.css">
     <script type="text/javascript" src="js/anychart-base.min.js"></script>
-    <ul class="topnav">
-        <li><a class="active" href="#">test1</a></li>
-        <li><a href="index2.html">test2</a></li>
-        <li><a href="index3.html">test3</a></li>
-    </ul>
+    <link type="text/css" rel="stylesheet" href="css/style.css" charset=utf-8>
 </head>
 
-<!--<body onload="time()">-->
-
 <body>
-    <h1 id="showtime" align="center">
-    </h1>
     <div id="container"></div>
-    <audio controls src="music/music.m4a" loop="loop" autoplay="autoplay"> </audio>
     <style type="text/css">
         html,
         #container {
             width: 100%;
-            height: 90%;
+            height: 100%;
             margin: 0;
             padding: 0;
+            background-color: transparent;
         }
     </style>
     <script>
         anychart.onDocumentReady(function () {
             // 添加数据
             var data = [
-                [Date.UTC(2023, 5, 21), 1, 1],
+                [Date.UTC(2023, 5, 21), -100, 100],
                 [Date.UTC(2023, 5, 24), 10, 10],
                 [Date.UTC(2023, 5, 25), 70, 20],
                 [Date.UTC(2023, 5, 30), 70, 50]
@@ -93,29 +84,7 @@
 
             // 绘制折线图
             chart.draw();
-            console.log("drawing")
         });
-
-        /*show time*/
-        function time() {
-            t_div = document.getElementById('showtime');
-            var now = new Date();
-            var startDate = new Date(2023, 5, 21, 20);
-            var leftTime = now.getTime() - startDate.getTime();
-            var leftsecond = parseInt(leftTime / 1000);
-            var day = Math.floor(leftsecond / (60 * 60 * 24));
-            var hour = Math.floor((leftsecond - day * 24 * 60 * 60) / 3600);
-            var minute = Math.floor((leftsecond - day * 24 * 60 * 60 - hour * 3600) / 60);
-            var second = Math.floor(leftsecond - day * 24 * 60 * 60 - hour * 3600 - minute * 60);
-            t_div.innerHTML = "时间 " + day + "天 " + hour + "时 " + minute + "分 " + second + "秒";
-
-            setTimeout(time, 1000);
-        }
-        /*play music*/
-        document.onclick = function (event) {
-            document.querySelector("audio").play()
-        }
     </script>
 </body>
-
 </html>

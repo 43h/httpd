@@ -1,54 +1,14 @@
 /**全局**/
 body {
     margin: 0 auto;
-    padding: 0 5% 0 5%;
+    padding: 1% 0 1% 0;
     font-size: 100%;
     height: 100%;
-    width: 90%;
+    width: 94%;
     font-family: "Noto Sans", sans-serif;
-    color: #003B4A;
-    background-color: #F6F6F6;
-}
-
-/**导航栏**/
-ul.topnav {
-    list-style-type: none;
-    margin: 0;
-    padding: 0 1%;
-    overflow: hidden;
-    width: 100%;
-    background-color: #F5E8E6;
-}
-
-/*导航菜单位置*/
-ul.topnav li {
-    float: left;
-}
-
-/*导航菜单链接*/
-ul.topnav li a {
-    display: block;
-    color: 003B4A;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-/* 鼠标选中颜色 */
-/* ul.topnav li a:hover:not(.active) {
-    background-color: #1E90FF;
-} */
-
-/*选中颜色*/
-/* ul.topnav li a.active {
-    background-color: #1E90FF;
-} */
-
-/**标题1**/
-h1 {
-    margin: 1em 0 0 0;
-    font-size: 1.5em;
-    letter-spacing: 2px;
+    /* color: #003B4A; */
+    /* background-color: #F6F6F6; */
+    background-color: transparent;
 }
 
 /**时间线**/
@@ -73,6 +33,7 @@ h1 {
 /*正文内容*/
 #timeline p {
     margin: 0;
+    color: #ffffff;
 }
 
 /*日期*/
@@ -84,6 +45,7 @@ h1 {
     font-size: 1.3em;
     line-height: 20px;
     position: absolute;
+    color: #ffffff;
 }
 
 /*圆点*/
@@ -112,6 +74,7 @@ h1 {
     position: relative;
     max-height: 100%;
     border-color: #B5B3B4;
+    color: #ffffff;
     margin-right: 20px;
     /* transform: translateX(20px); */
     transition: max-height 0.4s linear, border-color 0.5s linear, transform 0.2s linear;
@@ -169,6 +132,7 @@ label {
     top: 10px;
     left: 10px;
     /* transition: transform 0.1s linear; */
+    color: #ffffff;
 }
 
 /*单选组*/
@@ -189,6 +153,7 @@ label {
     display: flex;
     flex-wrap: nowrap;
 }
+
 /*图片框*/
 .imagebox {
     border: 1px solid #ccc;
@@ -196,6 +161,7 @@ label {
     height: fit-content;
     width: fit-content;
 }
+
 /*单个图片*/
 .imagebox image {
     height: auto;
@@ -206,17 +172,24 @@ label {
 .imagebox p {
     padding: 5px;
     text-align: center;
-  }
+    color: #ffffff;
+}
 
 
-.cardlist{
+.cardlist {
     display: flex;
     flex-wrap: nowrap;
 }
-.cardbox{
+
+.cardbox {
     border: 1px solid #ccc;
     position: relative;
     height: fit-content;
     width: 50%;
     padding: 1%;
+    color: #ffffff;
+}
+
+.cardbox p{
+    color: #ffffff;
 }
